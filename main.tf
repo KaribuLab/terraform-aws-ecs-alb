@@ -24,9 +24,7 @@ resource "aws_security_group" "alb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "${var.alb_name}-sg"
-  }
+  tags = var.common_tags
 }
 
 resource "aws_lb" "alb" {
@@ -38,9 +36,7 @@ resource "aws_lb" "alb" {
 
   enable_deletion_protection = false
 
-  tags = {
-    Name = var.alb_name
-  }
+  tags = var.common_tags
 }
 
 resource "aws_lb_listener" "http" {
@@ -57,6 +53,7 @@ resource "aws_lb_listener" "http" {
       status_code  = "404"
     }
   }
+  tags = var.common_tags
 }
 
 resource "aws_lb_target_group" "alb" {
@@ -65,6 +62,7 @@ resource "aws_lb_target_group" "alb" {
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = var.vpc_id
+  tags = var.common_tags
 }
 
 resource "aws_lb_listener" "https" {
@@ -84,5 +82,6 @@ resource "aws_lb_listener" "https" {
       status_code  = "404"
     }
   }
+  tags = var.common_tags
 }
 
