@@ -11,6 +11,7 @@ Este módulo crea un Application Load Balancer (ALB) para ser utilizado con serv
 | subnet_ids      | list(string) | Lista de IDs de subredes para el ALB       | sí        |
 | certificate_arn | string       | ARN del certificado ACM para HTTPS         | no        |
 | common_tags     | map(string)  | Etiquetas comunes para aplicar a recursos  | sí        |
+| idle_timeout    | number       | Tiempo de espera en segundos (evita 504)   | no        |
 
 ## Outputs
 
@@ -31,6 +32,7 @@ module "ecs_alb" {
   vpc_id          = "vpc-123456789"
   subnet_ids      = ["subnet-123456789", "subnet-987654321"]
   certificate_arn = "arn:aws:acm:region:account:certificate/certificate-id"
+  idle_timeout    = 120  # Aumentar el timeout a 2 minutos
   
   common_tags = {
     Environment = "production"
@@ -50,6 +52,10 @@ El módulo crea los siguientes recursos:
 - Target Group por defecto
 
 Todos los recursos son etiquetados con los valores proporcionados en `common_tags`.
+
+### Prevención de errores 504 Gateway Timeout
+
+El parámetro `idle_timeout` permite configurar el tiempo en segundos que el ALB mantendrá una conexión inactiva abierta. El valor predeterminado es 60 segundos, pero puede ser aumentado hasta 4000 segundos (66.6 minutos) para evitar errores 504 Gateway Timeout en aplicaciones que requieren más tiempo para completar las solicitudes.
 
 ## Scripts de Prueba
 

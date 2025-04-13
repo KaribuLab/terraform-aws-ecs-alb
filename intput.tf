@@ -24,3 +24,9 @@ variable "common_tags" {
   description = "Common tags to be applied to all resources"
   type        = map(string)
 }
+
+variable "idle_timeout" {
+  description = "Tiempo de espera en segundos para conexiones inactivas (para evitar errores 504)"
+  type        = number
+  default     = 60
+}

@@ -34,6 +34,7 @@ resource "aws_lb" "alb" {
   security_groups    = [aws_security_group.alb.id]
   subnets            = var.subnet_ids
 
+  idle_timeout       = var.idle_timeout
   enable_deletion_protection = false
 
   tags = var.common_tags
