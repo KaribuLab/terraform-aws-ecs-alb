@@ -4,6 +4,18 @@ variable "alb_name" {
   default     = "ecs-alb"
 }
 
+variable "alb_internal" {
+  description = "Whether the ALB is internal or external"
+  type        = bool
+  default     = false
+}
+
+variable "alb_deletion_protection_enabled" {
+  description = "Whether the ALB deletion protection is enabled"
+  type        = bool
+  default     = false
+}
+
 variable "vpc_id" {
   description = "ID of the VPC where the ALB will be deployed"
   type        = string

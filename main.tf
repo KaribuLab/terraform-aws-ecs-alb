@@ -29,13 +29,13 @@ resource "aws_security_group" "alb" {
 
 resource "aws_lb" "alb" {
   name               = var.alb_name
-  internal           = false
+  internal           = var.alb_internal
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
   subnets            = var.subnet_ids
 
   idle_timeout       = var.idle_timeout
-  enable_deletion_protection = false
+  enable_deletion_protection = var.alb_deletion_protection_enabled
 
   tags = var.common_tags
 }
